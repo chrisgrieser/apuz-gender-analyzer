@@ -41,7 +41,7 @@ https://www.bpb.de/shop/zeitschriften/apuz/diskurskultur-2023/
 ```
 
 ## Annual Registers
-**only available for 2011-2022*
+*only available for 2011-2022*
 
 ```
 https://www.bpb.de/system/files/dokument_pdf/APuZ_2011-Jahresregister_online.pdf
@@ -59,7 +59,7 @@ https://www.bpb.de/system/files/dokument_pdf/APuZ_2022-Jahresregister_online.pdf
 ```
 
 ## Sitemaps
-Are apparently incomplete.
+Are apparently incomplete, therefore we are not using this.
 
 ```bash
 curl "https://www.bpb.de/sitemap.xml?page=1" > sitemap1.xml
