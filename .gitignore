@@ -1,4 +1,11 @@
+# python
 .venv
-sitemap1.xml
-sitemap2.xml
+
+# data
+sitemap*.xml
+
+# mac
 .DS_Store
+
+# sublime editor
+*.sublime-workspace
