@@ -65,15 +65,17 @@ Are apparently incomplete, therefore not using this.
 curl "https://www.bpb.de/sitemap.xml?page=1" > sitemap1.xml
 curl "https://www.bpb.de/sitemap.xml?page=2" > sitemap2.xml
 ```
-## ToDo List (short/mid term)
+
+## To-do List (short-/midterm)
 - [ ] Reduce number of API calls by caching first name data
-- [ ] Analyse all Annual Registers (instead of small sample)
-- [ ] Analyse data by year
+- [ ] Analyze all Annual Registers (instead of small sample)
+- [ ] Analyze data by year
 - [ ] Plot data in a time series graph
-- [ ] Detect and factor in co-authorships
+- [ ] Detect and factor in co-authorship
 - [ ] Investigate correlation between topics and gender of the author
 
 ## Roadmap (long term)
 - [ ] Scrape all data before 2011
-- [ ] Publish new data periodcally via Mastodon 
+- [ ] Publish new data periodically via Mastodon 
 - [ ] Describe project results in a blog post
+
