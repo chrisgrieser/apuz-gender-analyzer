@@ -13,14 +13,14 @@ Analysis of names by gender.
 
 ## Articles
 
-```
+```txt
 https://www.bpb.de/shop/zeitschriften/apuz/1953-2023/520827/stalins-tod-und-das-ende-der-allmacht/
 https://www.bpb.de/shop/zeitschriften/apuz/1953-2023/520821/editorial/
 ```
 
 ## Issues
 
-```
+```txt
 https://www.bpb.de/shop/zeitschriften/apuz/archiv/524414/apuz-47-1953/
 https://www.bpb.de/shop/zeitschriften/apuz/archiv/524422/apuz-49-1953/
 https://www.bpb.de/shop/zeitschriften/apuz/archiv/524430/apuz-50-1953/
@@ -43,7 +43,7 @@ https://www.bpb.de/shop/zeitschriften/apuz/diskurskultur-2023/
 ## Annual Registers
 *only available for 2011-2022*
 
-```
+```txt
 https://www.bpb.de/system/files/dokument_pdf/APuZ_2011-Jahresregister_online.pdf
 https://www.bpb.de/system/files/dokument_pdf/APuZ_2012-Jahresregister_online.pdf
 https://www.bpb.de/system/files/dokument_pdf/APuZ_2013-Jahresregister_online_0.pdf
@@ -59,7 +59,7 @@ https://www.bpb.de/system/files/dokument_pdf/APuZ_2022-Jahresregister_online.pdf
 ```
 
 ## Sitemaps
-Are apparently incomplete, therefore we are not using this.
+Are apparently incomplete, therefore not using this.
 
 ```bash
 curl "https://www.bpb.de/sitemap.xml?page=1" > sitemap1.xml

@@ -31,7 +31,7 @@ def main() -> None:
     # calculate percentage
     total = len(sample_names)
     percentage_females = str(genders.count("female") / total * 100) + "%"
-    print(f"🪚 {percentage_females = }")
+    print(f"In Sample: {percentage_females = }")
 
 
 if __name__ == "__main__":
