@@ -26,12 +26,12 @@ def main() -> None:
 
     # analyze names via https://genderize.io/
     genderize_api_response = Genderize().get([sample_names])
-    genders = [ item["gender"] for item in genderize_api_response ] # pyright: ignore [reportGeneralTypeIssues]
+    genders = [ item["gender"] for item in genderize_api_response ] # pyright: ignore [reportArgumentType]
 
     # calculate percentage
     total = len(sample_names)
     percentage_females = str(genders.count("female") / total * 100) + "%"
-    print(f"In Sample: {percentage_females = }")
+    print(f"{percentage_females = }\n(in sample)")
 
 
 if __name__ == "__main__":
