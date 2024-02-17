@@ -1,5 +1,7 @@
 """Main Module."""
 
+from __future__ import annotations
+
 import re
 from pathlib import Path
 
@@ -11,7 +13,7 @@ def main() -> None:
     years_with_register = list(range(2011, 2022 + 1))
 
     # collect all names
-    all_years_names = []
+    all_years_names: list[str] = []
     for year in years_with_register:
         filepath = Path(f"chronological-registers/{year}.txt")
         fulltext = filepath.read_text()
@@ -25,8 +27,8 @@ def main() -> None:
     sample_names = all_years_names[:10]  # 10 names maximum per call
 
     # analyze names via https://genderize.io/
-    genderize_api_response = Genderize().get([sample_names])
-    genders = [ item["gender"] for item in genderize_api_response ] # pyright: ignore [reportArgumentType]
+    genderize_api_response = Genderize().get(sample_names)
+    genders = [item["gender"] for item in genderize_api_response]
 
     # calculate percentage
     total = len(sample_names)
