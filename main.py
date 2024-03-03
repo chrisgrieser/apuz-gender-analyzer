@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import re
 from pathlib import Path
+from typing import TypedDict
 
 from genderize import Genderize
 
@@ -71,12 +72,18 @@ def fetch_gender_into_caching_db() -> None:
     """
 
 
-def lookup_name_in_caching_db(name: str) -> str | None:
+def lookup_name_in_caching_db(name_to_check: str) -> str | None:
     """Looks a name in our local database (as hashmap to avoid duplicates).
 
     Given a name, returns "male" or "female" if the name is in the database.
     If not, adds the name to the database with no gender, and returns None.
     """
+
+    class CacheDatabaseEntry(TypedDict):
+        name: str
+        gender: str
+        probability: float
+
     # 1. check if cache exists, if not, create cache database as csv with header
     location_of_cache_db = "./databases/"
     parent_dir = Path(location_of_cache_db)
@@ -88,18 +95,41 @@ def lookup_name_in_caching_db(name: str) -> str | None:
     cache_db = Path(path_of_cache_db)
     if not cache_db.exists():
         cache_db.touch()  # touch = create empty file
-        csv_header = "name;gender"
-        cache_db.write_text(csv_header)
 
     # 2. check if name is in cache
-    cache_content = cache_db.
+    cache_content = cache_db.read_text()
+    data_rows = cache_content.strip().split("\n")
+    cache_db_entries: list[CacheDatabaseEntry] = []
+    num_of_columns = 3
+    for row in data_rows:
+        parts = row.strip().split(";")
+        if len(parts) != num_of_columns:  # in case csv-row has insufficient semicolons
+            continue
+        name, gender, probability = parts
+        cache_db_entries.append(
+            {
+                "name": name,
+                "gender": gender,
+                "probability": float(probability),
+            },
+        )
 
     # 2a. if name is in cache, return gender (and probability)
-    # 2b. if name is not in cache, append name to cache with no gender, and return None
+    for entry in cache_db_entries:
+        if entry["name"] == name_to_check:
+            return entry["gender"]
+
+    # 2b. if name is not in cache, then:
+    # I. add name to cache with no gender
+    # TODO
+
+    # II. return None
+    return None
+
 
 
 # ──────────────────────────────────────────────────────────────────────────────
 
 if __name__ == "__main__":
-    lookup_name_in_caching_db("JK")
+    lookup_name_in_caching_db("PLACEHOLDER")  # TODO
     # main()
