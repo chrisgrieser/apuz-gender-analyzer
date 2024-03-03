@@ -6,6 +6,7 @@ Analysis of names by gender.
 <!-- toc -->
 
 - [Procedure](#procedure)
+	* [Technical Implementation](#technical-implementation)
 - [To-do](#to-do)
 	* [Short list](#short-list)
 	* [Roadmap (long term)](#roadmap-long-term)
@@ -25,7 +26,9 @@ Analysis of names by gender.
 5. Calculate percentage of genders.
 6. Display results.
 
----
+### Technical Implementation
+- Background-Service: [Genderize](https://genderize.io/) to identify gender of names
+- [API rate limit without subscription: 100 calls per day, 10 names per call](https://genderize.io/faq#api-usage)
 
 ## To-do
 
