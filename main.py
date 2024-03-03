@@ -36,5 +36,27 @@ def main() -> None:
     print(f"{percentage_females = }\n(in sample)")
 
 
+def fetch_gender_into_db() -> None:
+    """Fetches gender from into our local database.
+
+    Gets all names in Database with missing gender, and creates batches to call
+    via the genderize API. Saves the results in our local database.
+    """
+
+
+def calc_gender_dist_in_dataset(list_of_names: list[str]) -> float:
+    """Calculates the gender distribution in the dataset."""
+    return 0.5
+
+
+def lookup_name_in_db(name: str) -> str | None:
+    """Looks a name in our local database.
+
+    Given a name, returns "male" or "female" if the name is in the database.
+    If not, adds the name to the database with no gender, and returns None.
+    """
+    
+
+
 if __name__ == "__main__":
     main()
