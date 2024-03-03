@@ -4,6 +4,9 @@
 # data
 sitemap*.xml
 
+# cache
+databases/cache.csv
+
 # mac
 .DS_Store
 

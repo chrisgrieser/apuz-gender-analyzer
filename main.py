@@ -10,21 +10,17 @@ from genderize import Genderize
 
 def main() -> None:
     """Execute main function."""
-    years_with_register = list(range(2011, 2022 + 1))
+    all_years_names = get_all_names_from_raw_data()
+    check_sample_data(all_years_names)
 
-    # collect all names
-    all_years_names: list[str] = []
-    for year in years_with_register:
-        filepath = Path(f"chronological-registers/{year}.txt")
-        fulltext = filepath.read_text()
-        author_names_raw = re.findall(r"\((\D*)\)", fulltext)
-        single_author_names = list(filter(lambda name: "/" not in name, author_names_raw))
-        # multiple_author_names = list(filter(lambda name: "/" in name, author_names_raw))
-        single_author_first_names = [name.split(" ")[0] for name in single_author_names]
-        all_years_names.extend(single_author_first_names)
 
-    # Sample
-    sample_names = all_years_names[:10]  # 10 names maximum per call
+def check_sample_data(data: list[str]) -> None:
+    """Inspect a sample.
+
+    Creates sample of 10 names from the input data with the genderize API.
+    Prints percentage of females in the sample.
+    """
+    sample_names = data[:10]  # 10 names maximum per call
 
     # analyze names via https://genderize.io/
     genderize_api_response = Genderize().get(sample_names)
@@ -36,12 +32,27 @@ def main() -> None:
     print(f"{percentage_females = }\n(in sample)")
 
 
-def fetch_gender_into_db() -> None:
-    """Fetches gender from into our local database.
+def get_all_names_from_raw_data() -> list[str]:
+    """Gets all names from raw data (chronological-registers).
 
-    Gets all names in Database with missing gender, and creates batches to call
-    via the genderize API. Saves the results in our local database.
+    currently:
+    - only single authors, for 2011 - 2022
+    - simple list, containing duplicates
+    - contains some non-names/wrong reading from raw-data (TODO: remove those)
     """
+    years_with_register = list(range(2011, 2022 + 1))
+
+    # collect all  names
+    all_years_names: list[str] = []
+    for year in years_with_register:
+        filepath = Path(f"chronological-registers/{year}.txt")
+        fulltext = filepath.read_text()
+        author_names_raw = re.findall(r"\((\D*)\)", fulltext)
+        single_author_names = list(filter(lambda name: "/" not in name, author_names_raw))
+        # multiple_author_names = list(filter(lambda name: "/" in name, author_names_raw))
+        single_author_first_names = [name.split(" ")[0] for name in single_author_names]
+        all_years_names.extend(single_author_first_names)
+    return all_years_names
 
 
 def calc_gender_dist_in_dataset(list_of_names: list[str]) -> float:
@@ -49,14 +60,45 @@ def calc_gender_dist_in_dataset(list_of_names: list[str]) -> float:
     return 0.5
 
 
-def lookup_name_in_db(name: str) -> str | None:
-    """Looks a name in our local database.
+# ──────────────────────────────────────────────────────────────────────────────
+
+
+def fetch_gender_into_caching_db() -> None:
+    """Fetches gender from into our local database.
+
+    Gets all names in Database with missing gender, and creates batches to call
+    via the genderize API. Saves the results in our local database.
+    """
+
+
+def lookup_name_in_caching_db(name: str) -> str | None:
+    """Looks a name in our local database (as hashmap to avoid duplicates).
 
     Given a name, returns "male" or "female" if the name is in the database.
     If not, adds the name to the database with no gender, and returns None.
     """
-    
+    # 1. check if cache exists, if not, create cache database as csv with header
+    location_of_cache_db = "./databases/"
+    parent_dir = Path(location_of_cache_db)
+    if not parent_dir.exists():
+        parent_dir.mkdir()
 
+    filename_of_cache_db = "cache.csv"
+    path_of_cache_db = location_of_cache_db + filename_of_cache_db
+    cache_db = Path(path_of_cache_db)
+    if not cache_db.exists():
+        cache_db.touch()  # touch = create empty file
+        csv_header = "name;gender"
+        cache_db.write_text(csv_header)
+
+    # 2. check if name is in cache
+
+    # 2a. if name is in cache, return gender (and probability)
+    # 2b. if name is not in cache, append name to cache with no gender, and return None
+
+
+# ──────────────────────────────────────────────────────────────────────────────
 
 if __name__ == "__main__":
-    main()
+    lookup_name_in_caching_db("JK")
+    # main()
