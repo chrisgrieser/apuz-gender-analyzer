@@ -30,6 +30,8 @@ Analysis of names by gender.
 - Background-Service: [Genderize](https://genderize.io/) to identify gender of names
 - [API rate limit without subscription: 100 calls per day, 10 names per call](https://genderize.io/faq#api-usage)
 
+![database caching](images/database-caching.png)
+
 ## To-do
 
 ### Short list
