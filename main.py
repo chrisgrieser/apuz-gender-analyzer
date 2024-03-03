@@ -92,6 +92,7 @@ def lookup_name_in_caching_db(name: str) -> str | None:
         cache_db.write_text(csv_header)
 
     # 2. check if name is in cache
+    cache_content = cache_db.
 
     # 2a. if name is in cache, return gender (and probability)
     # 2b. if name is not in cache, append name to cache with no gender, and return None

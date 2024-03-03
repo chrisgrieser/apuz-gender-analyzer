@@ -104,22 +104,6 @@ https://www.bpb.de/system/files/dokument_pdf/APuZ_2019_Jahresregister_online.pdf
 https://www.bpb.de/system/files/dokument_pdf/APuZ_2020_Jahresregister_online.pdf
 https://www.bpb.de/system/files/dokument_pdf/APuZ_2021_Jahresregister_Umbruch_v3.pdf
 https://www.bpb.de/system/files/dokument_pdf/APuZ_2022-Jahresregister_online.pdf
-```# Annual Registers
-*only available for 2011-2022*
-
-```txt
-https://www.bpb.de/system/files/dokument_pdf/APuZ_2011-Jahresregister_online.pdf
-https://www.bpb.de/system/files/dokument_pdf/APuZ_2012-Jahresregister_online.pdf
-https://www.bpb.de/system/files/dokument_pdf/APuZ_2013-Jahresregister_online_0.pdf
-https://www.bpb.de/system/files/dokument_pdf/APuZ_2014_Jahresregister_online.pdf
-https://www.bpb.de/system/files/dokument_pdf/APuZ_2015_Jahresregister_online.pdf
-https://www.bpb.de/system/files/dokument_pdf/APuZ_2016_Jahresregister_online.pdf
-https://www.bpb.de/system/files/dokument_pdf/APuZ_2017_Jahresregister_online.pdf
-https://www.bpb.de/system/files/dokument_pdf/APuZ_2018_Jahresregister_online.pdf
-https://www.bpb.de/system/files/dokument_pdf/APuZ_2019_Jahresregister_online.pdf
-https://www.bpb.de/system/files/dokument_pdf/APuZ_2020_Jahresregister_online.pdf
-https://www.bpb.de/system/files/dokument_pdf/APuZ_2021_Jahresregister_Umbruch_v3.pdf
-https://www.bpb.de/system/files/dokument_pdf/APuZ_2022-Jahresregister_online.pdf
 ```
 
 ### Sitemaps
