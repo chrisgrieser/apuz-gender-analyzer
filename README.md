@@ -5,7 +5,9 @@ Analysis of names by gender.
 
 <!-- toc -->
 
-- [Procedure](#procedure)
+- [Usage](#usage)
+	* [Setup](#setup)
+	* [Technical procedure](#technical-procedure)
 	* [Technical Implementation](#technical-implementation)
 - [To-do](#to-do)
 	* [Short list](#short-list)
@@ -18,7 +20,14 @@ Analysis of names by gender.
 
 <!-- tocstop -->
 
-## Procedure
+## Usage
+
+### Setup
+1. Clone the repo.
+2. Run `make init` in the terminal to set up the virtual environment and install
+   the dependencies
+
+### Technical procedure
 1. Scrap names from `APuZ`.
 2. Get list of names.
 3. Parse names into required format.
