@@ -14,4 +14,6 @@ init:
 	python3.12 -m venv ./.venv && \
 	source ./.venv/bin/activate && \
 	python3 -m pip install -r requirements.txt && \
-	python3 -m pip install --upgrade pip
+	python3 -m pip install --upgrade pip && \
+	echo "✅ Virtual Environment setup. (Still needs to be enabled.)" ; \
+	git config user.name "jk & Chris Grieser"
