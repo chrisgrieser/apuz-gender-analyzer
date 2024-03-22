@@ -3,7 +3,7 @@
 
 run:
 	source ./.venv/bin/activate && \
-	python3 main.py
+	python3 -m main
 
 # set up venv & install deps
 # INFO using homebrew python3.12 instead of macOS system python3.9 due to

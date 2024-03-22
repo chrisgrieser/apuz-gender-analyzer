@@ -2,7 +2,6 @@
 [tool.pyright]
 venvPath = "."
 venv = ".venv"
-strict = ["."]
 typeCheckingMode = "strict"
 
 [tool.python.analysis]
