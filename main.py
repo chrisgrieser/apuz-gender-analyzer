@@ -64,39 +64,16 @@ def calc_gender_dist_in_dataset(list_of_names: list[str]) -> float:
 # ──────────────────────────────────────────────────────────────────────────────
 
 
-def fetch_gender_into_caching_db() -> None:
-    """Fetches gender from into our local database.
+class CacheDatabaseEntry(TypedDict):
+    """Entry in the cache database."""
 
-    Gets all names in Database with missing gender, and creates batches to call
-    via the genderize API. Saves the results in our local database.
-    """
+    name: str
+    gender: str
+    probability: float
 
 
-def lookup_name_in_caching_db(name_to_check: str) -> str | None:
-    """Looks a name in our local database (as hashmap to avoid duplicates).
-
-    Given a name, returns "male" or "female" if the name is in the database.
-    If not, adds the name to the database with no gender, and returns None.
-    """
-
-    class CacheDatabaseEntry(TypedDict):
-        name: str
-        gender: str
-        probability: float
-
-    # 1. check if cache exists, if not, create cache database as csv with header
-    location_of_cache_db = "./databases/"
-    parent_dir = Path(location_of_cache_db)
-    if not parent_dir.exists():
-        parent_dir.mkdir()
-
-    filename_of_cache_db = "cache.csv"
-    path_of_cache_db = location_of_cache_db + filename_of_cache_db
-    cache_db = Path(path_of_cache_db)
-    if not cache_db.exists():
-        cache_db.touch()  # touch = create empty file
-
-    # 2. check if name is in cache
+def csv_to_cache_db(cache_db: Path) -> list[CacheDatabaseEntry]:
+    """Converts csv to cache database."""
     cache_content = cache_db.read_text()
     data_rows = cache_content.strip().split("\n")
     cache_db_entries: list[CacheDatabaseEntry] = []
@@ -113,6 +90,69 @@ def lookup_name_in_caching_db(name_to_check: str) -> str | None:
                 "probability": float(probability),
             },
         )
+    return cache_db_entries
+
+
+def fetch_gender_into_caching_db() -> None:
+    """Fetches gender from into our local database.
+
+    Gets all names in Database with undetermined gender, and creates batches to call
+    via the genderize API. Saves the results in our local database.
+    """
+    # 1. get 10 undetermined names
+    location_of_cache_db = "./databases/cache.csv"
+    cache_db = Path(location_of_cache_db)
+    if not cache_db.exists():
+        print("Cache does not exist yet.")
+        return
+
+    cache_db_entries = csv_to_cache_db(cache_db)
+    entries_without_gender = filter(
+        lambda entry: entry["gender"] == "undetermined",
+        cache_db_entries,
+    )
+    names_only = [entry["name"] for entry in entries_without_gender]
+    ten_names_only = names_only[:10]  # 10 names maximum per call for genderize API
+    genderize_api_response = Genderize().get(ten_names_only)
+
+    # 2. update cache (NOTE performance can be improved)
+    for response_item in genderize_api_response:
+        for cache_entry in cache_db_entries:
+            if cache_entry["name"] == response_item["name"]:
+                cache_entry["gender"] = str(response_item["gender"])
+                cache_entry["probability"] = float(response_item["probability"])
+                break
+
+    # 3. write cache back to csv
+    csv_text = ""
+    for entry in cache_db_entries:
+        row = f"{entry["name"]};{entry["gender"]};{entry["probability"]}\n"
+        csv_text += row
+
+    cache_db.write_text(csv_text)
+    print("Updated cache with new names.")
+
+
+def lookup_name_in_caching_db(name_to_check: str) -> str | None:
+    """Looks a name in our local database (as hashmap to avoid duplicates).
+
+    Given a name, returns "male" or "female" if the name is in the database.
+    If not, adds the name to the database with no gender, and returns None.
+    """
+    # 1. check if cache exists, if not, create cache database as csv
+    location_of_cache_db = "./databases/"
+    parent_dir = Path(location_of_cache_db)
+    if not parent_dir.exists():
+        parent_dir.mkdir()
+
+    filename_of_cache_db = "cache.csv"
+    path_of_cache_db = location_of_cache_db + filename_of_cache_db
+    cache_db = Path(path_of_cache_db)
+    if not cache_db.exists():
+        cache_db.touch()  # touch = create empty file
+
+    # 2. read entries
+    cache_db_entries = csv_to_cache_db(cache_db)
 
     # 2a. if name is in cache, return gender (and probability)
     for entry in cache_db_entries:
@@ -129,5 +169,4 @@ def lookup_name_in_caching_db(name_to_check: str) -> str | None:
 # ──────────────────────────────────────────────────────────────────────────────
 
 if __name__ == "__main__":
-    output = lookup_name_in_caching_db("Tonia")  
-    print(output)
+    fetch_gender_into_caching_db()
