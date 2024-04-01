@@ -117,19 +117,17 @@ def lookup_name_in_caching_db(name_to_check: str) -> str | None:
     # 2a. if name is in cache, return gender (and probability)
     for entry in cache_db_entries:
         if entry["name"] == name_to_check:
-            return entry["gender"]
+            return f"gender: {entry["gender"]}, probability: {entry["probability"]}"
 
-    # 2b. if name is not in cache, then:
-    # I. add name to cache with no gender
-    # TODO
-
-    # II. return None
+    # 2b. if name is not in cache, then add name to cache with no gender and
+    # return None
+    new_csv_row = f"{name_to_check};undetermined;-1"
+    cache_db.open("a").write(new_csv_row + "\n")
     return None
-
 
 
 # ──────────────────────────────────────────────────────────────────────────────
 
 if __name__ == "__main__":
-    lookup_name_in_caching_db("PLACEHOLDER")  # TODO
-    # main()
+    output = lookup_name_in_caching_db("Tonia")  
+    print(output)
