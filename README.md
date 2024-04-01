@@ -26,7 +26,7 @@ Analysis of names by gender.
 1. Clone the repo.
 2. Run `make init` in the terminal to set up the virtual environment and install
    the dependencies
-3. You might need to restart your editor
+3. You might need to restart your editor.
 
 ### Technical procedure
 1. Scrap names from `APuZ`.

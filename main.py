@@ -112,11 +112,20 @@ def fetch_gender_into_caching_db() -> None:
         cache_db_entries,
     )
     names_only = [entry["name"] for entry in entries_without_gender]
-    ten_names_only = names_only[:10]  # 10 names maximum per call for genderize API
-    genderize_api_response = Genderize().get(ten_names_only)
+
+    # DOCS https://genderize.io/faq#api-usage
+    names_per_call = 10
+    calls_per_day_free_tier = 100
+    max_names_to_fetch = names_per_call * calls_per_day_free_tier
+
+    acc_genderize_response: list[dict[str, str|float]] = []
+    for i in range(0, max_names_to_fetch, names_per_call):
+        chunk = names_only[i:(i + names_per_call)]
+        response = Genderize().get(chunk)
+        acc_genderize_response.extend(response)
 
     # 2. update cache (NOTE performance can be improved)
-    for response_item in genderize_api_response:
+    for response_item in acc_genderize_response:
         for cache_entry in cache_db_entries:
             if cache_entry["name"] == response_item["name"]:
                 cache_entry["gender"] = str(response_item["gender"])
