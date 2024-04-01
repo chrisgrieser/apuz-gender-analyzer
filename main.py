@@ -120,9 +120,13 @@ def fetch_gender_into_caching_db() -> None:
 
     acc_genderize_response: list[dict[str, str|float]] = []
     for i in range(0, max_names_to_fetch, names_per_call):
-        chunk = names_only[i:(i + names_per_call)]
+        start = i
+        stop = i + names_per_call
+        chunk = names_only[start:stop]
         response = Genderize().get(chunk)
         acc_genderize_response.extend(response)
+        if stop >= len(names_only):
+            break
 
     # 2. update cache (NOTE performance can be improved)
     for response_item in acc_genderize_response:
